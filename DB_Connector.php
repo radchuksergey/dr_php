@@ -54,7 +54,7 @@ class DB_Connector {
             $db_error = $mysqli->connect_errno."-".$mysqli->connect_error();
             
         }else{
-            $query_result = $mysqli->query($query);
+            $query_result = $mysqli->query($sql_statement);
             if(!$query_result){
                 $db_error = $mysqli->errno."-".$mysqli->error;
                 
