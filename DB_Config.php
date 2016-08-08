@@ -1,0 +1,56 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of DB_Config
+ *
+ * @author sergey
+ */
+class DB_Config {
+    //put your code here
+    private static $username = "u710756719_super";
+    private static $servername = "localhost";
+    private static $db_name = "u710756719_plan";
+    private static $db_password = "Y6rUFWtMGC";
+    
+    private static $user_registration_table = "user_registration_table";
+    private static $user_task_table = "user_task_table";
+
+    public static function getDB_Name() {
+        return self::$db_name;
+    }
+
+    private static $no_fly_zone_table = "no_fly_zone_table";
+    
+    public static function getDB_Username(){
+        return self::$username;
+    }
+    
+    
+    
+    public static function getServer_Name(){
+        return self::$servername;
+    }
+    
+    public static function getDB_Password(){
+        return self::$db_password;
+    }
+
+    public static function getUser_Registration_TableName(){
+        return self::$user_registration_table;
+    }
+    
+    public static function getUser_Task_TableName(){
+        return self::$user_task_table;
+    }
+    
+    public static function getNo_Fly_Zone_TableName(){
+        return self::$no_fly_zone_table;
+    }
+    
+}
