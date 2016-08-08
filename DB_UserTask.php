@@ -14,6 +14,7 @@
 class UserTask {
    
     private $task_id;
+    private $task_type;
     private $user_id;
     private $task_file_name;
     private $task_instruction;
@@ -24,96 +25,103 @@ class UserTask {
     private $task_date_last_use;
     private $task_usage_count;
     private $task_is_favorite;
-    
-    function getTask_id() {
+    function getTask_type() {
+        return $this->task_type;
+    }
+
+    function setTask_type($task_type) {
+        $this->task_type = $task_type;
+    }
+
+        public function getTask_id() {
         return $this->task_id;
     }
 
-    function getUser_id() {
+    public function getUser_id() {
         return $this->user_id;
     }
 
-    function getTask_file_name() {
+    public function getTask_file_name() {
         return $this->task_file_name;
     }
 
-    function getTask_instruction() {
+    public function getTask_instruction() {
         return $this->task_instruction;
     }
 
-    function getTask_image_small() {
+    public function getTask_image_small() {
         return $this->task_image_small;
     }
 
-    function getTask_image_large() {
+    public function getTask_image_large() {
         return $this->task_image_large;
     }
 
-    function getTask_date_create() {
+    public function getTask_date_create() {
         return $this->task_date_create;
     }
 
-    function getTask_date_last_modify() {
+    public function getTask_date_last_modify() {
         return $this->task_date_last_modify;
     }
 
-    function getTask_date_last_use() {
+    public function getTask_date_last_use() {
         return $this->task_date_last_use;
     }
 
-    function getTask_usage_count() {
+    public function getTask_usage_count() {
         return $this->task_usage_count;
     }
 
-    function getTask_is_favorite() {
+    public function getTask_is_favorite() {
         return $this->task_is_favorite;
     }
 
-    function setTask_id($task_id) {
+    public function setTask_id($task_id) {
         $this->task_id = $task_id;
     }
 
-    function setUser_id($user_id) {
+    public function setUser_id($user_id) {
         $this->user_id = $user_id;
     }
 
-    function setTask_file_name($task_file_name) {
+    public function setTask_file_name($task_file_name) {
         $this->task_file_name = $task_file_name;
     }
 
-    function setTask_instruction($task_instruction) {
+    public function setTask_instruction($task_instruction) {
         $this->task_instruction = $task_instruction;
     }
 
-    function setTask_image_small($task_image_small) {
+    public function setTask_image_small($task_image_small) {
         $this->task_image_small = $task_image_small;
     }
 
-    function setTask_image_large($task_image_large) {
+    public function setTask_image_large($task_image_large) {
         $this->task_image_large = $task_image_large;
     }
 
-    function setTask_date_create($task_date_create) {
+    public function setTask_date_create($task_date_create) {
         $this->task_date_create = $task_date_create;
     }
 
-    function setTask_date_last_modify($task_date_last_modify) {
+    public function setTask_date_last_modify($task_date_last_modify) {
         $this->task_date_last_modify = $task_date_last_modify;
     }
 
-    function setTask_date_last_use($task_date_last_use) {
+    public function setTask_date_last_use($task_date_last_use) {
         $this->task_date_last_use = $task_date_last_use;
     }
 
-    function setTask_usage_count($task_usage_count) {
+    public function setTask_usage_count($task_usage_count) {
         $this->task_usage_count = $task_usage_count;
     }
 
-    function setTask_is_favorite($task_is_favorite) {
+    public function setTask_is_favorite($task_is_favorite) {
         $this->task_is_favorite = $task_is_favorite;
     }
 
-    public function getTaskHash(){
+     public function getTaskHash(){
         return md5($this->task_instruction);
     }
 

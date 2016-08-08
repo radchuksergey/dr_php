@@ -85,14 +85,17 @@ class DB_UserOperator extends DB_Connector {
         $current_data = date();
         $passwd = $user_password.$current_data;
         $passwd = sha1($passwd);
+        $user = FALSE;
         str_replace("{USER_LOGIN}", $user_login, $sqlStatement);
         str_replace("{USER_EMAIL}", $user_email, $sqlStatement);
         str_replace("{USER_PASSWORD}", $passwd, $sqlStatement);
         str_replace("{USER_DATE_REGISTRATION}", $current_data, $sqlStatement);
-        $db_result = $this->executeSQL($sql_statement, $db_error);
-        $result = ($db_result != FALSE);
+        $insert_result = $this->executeInsertSQL($sql_statement, $db_error);
+        if($insert_result){
+            $user = new DB_MobileUser($insert_result, $user_login, $user_email, $user_password,$current_data);
+        }
         $this->closeConnection();
-        return $result;
+        return $user;
     }
 
 //put your code here
