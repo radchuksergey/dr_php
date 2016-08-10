@@ -19,7 +19,9 @@ class DB_MobileUser extends JsonConvertable{
     private $user_email;
     private $user_password;
     private $user_date_registration;
-              
+    
+
+    
     function __construct() {
         foreach($this as $key=>$value){
             $value = FALSE;
@@ -70,6 +72,14 @@ class DB_MobileUser extends JsonConvertable{
 
     function setUser_date_registration($user_date_registration) {
         $this->user_date_registration = $user_date_registration;
+    }
+    
+    public function getCheckSum(){
+        $str = '';
+        foreach ($this as $key=>$value){
+            $str = $str.$value;
+        }
+        return md5($str);
     }
 
 }

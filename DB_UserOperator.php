@@ -20,10 +20,9 @@ class DB_UserOperator extends DB_Connector {
         $sqlStatement = "SELECT `user_id`,`user_login`,`user_email`,`user_password`,`user_date_registration` FROM `user_registration_table` WHERE `user_email` = {USERMAIL}";
         str_replace("{USERMAIL}", $user_email, $sqlStatement);
         $result = $this->executeSQL($sql_statement, $db_error);
-        $user = FALSE;
+        $user = new DB_MobileUser;
         if (($result) && (mysqli_affected_rows($result))) {
             $row = mysqli_fetch_assoc($result);
-            $user = new DB_MobileUser();
             $user->setAllFromArray($row);
         } 
         $this->closeConnection();
@@ -35,10 +34,9 @@ class DB_UserOperator extends DB_Connector {
         $sqlStatement = "SELECT `user_id`,`user_login`,`user_email`,`user_password`,`user_date_registration` FROM `user_registration_table` WHERE `user_id` = {USERID}";
         str_replace("{USERID}", $user_id, $sqlStatement);
         $result = $this->executeSQL($sql_statement, $db_error);
-        $user = FALSE;
+        $user = new DB_MobileUser();;
         if (($result) && (mysqli_affected_rows($result))) {
             $row = mysqli_fetch_assoc($result);
-            $user = new DB_MobileUser();
             $user->setAllFromArray($row);    
         } 
         $this->closeConnection();
