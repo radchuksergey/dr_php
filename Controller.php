@@ -16,5 +16,13 @@ abstract class Controller {
     const USER = 'user';
     const TASK = 'task';
     
+    const ANSWER = 'answer';
+    const CREATED = 'created';
+    const DELETED = 'deleted';
+    const UPDATED = 'updated';
+    const TASKLIST = 'tasklist';
+    
+    const ERRORS = 'errors';
+
     public abstract function executeRequest($http_request);
 }

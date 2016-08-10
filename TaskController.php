@@ -47,16 +47,16 @@ class TaskController extends Controller{
     public function executeRequest($http_request) {
         if (isset($http_request[self::ACTION])){
             if($http_request[self::ACTION] == self::CREATE_TASK){
-                $this->createTask($http_request);
+                echo $this->createTask($http_request);
             }
             if($http_request[self::ACTION] == self::DELETE_TASK){
-                $this->deleteTask($http_request);
+                echo $this->deleteTask($http_request);
             }
             if($http_request[self::ACTION] == self::TASK_LIST){
-                $this->getTaskList($http_request);
+                echo $this->getTaskList($http_request);
             }
             if($http_request[self::ACTION] == self::UPDATE_TASK){
-                $this->updateTask($http_request);    
+                echo $this->updateTask($http_request);    
             }
         }
         
@@ -64,32 +64,37 @@ class TaskController extends Controller{
     
     protected function createTask($http_request,&$db_error){
         $db_error = '';
-        if($this->isUserValid($http_request)){
+        $result = '';
+        $task = FALSE;
+        if($this->isUserValid($http_request, $db_error)){
             $task = new DB_UserTask();
             if (isset($http_request[self::TASK])){
                 $task->setObjectFieldsFromJson($http_request[self::TASK]);
                 $this->task_operator->insertTask($task, $db_error);
-                echo $task->getObjectAsJson();
+                $result[self::TASK] = $task->getObjectAsJson();
             }
         }
         else{
-            return FALSE;                
-        }            
+            $result[self::TASK] = FALSE;                
+        }    
         
-        
+        $result[self::ERRORS] = $db_error;
+        return json_encode($result);    
     }
     
     protected function deleteTask($http_request,&$db_error){
         $deleted = FALSE;
+        $result = '';
         if($this->isUserValid($http_request)){ 
            if(isset($http_request[self::TASK])){
             $task =new DB_UserTask();
             $task->setObjectFieldsFromJson($http_request[self::TASK]);
             $deleted =  $this->task_operator->deleteTask($task->getTask_id(), $db_error);
            }
-           
         }
-        return $deleted;
+        $result[self::DELETED] = $deleted;
+        $result[self::ERRORS] = $db_error;
+        return json_encode($result);
     }
     
     protected function updateTask($http_request,&$db_error){
@@ -102,6 +107,9 @@ class TaskController extends Controller{
            }
         }
         return $updated;
+        $result[self::UPDATED] = $updated;
+        $result[self::ERRORS] = $db_error;
+        echo json_encode($result);
     }
     
     protected function getTaskList($http_request,&$db_error){
@@ -118,6 +126,8 @@ class TaskController extends Controller{
                
             }
         }
+        $result[self::TASKLIST] = $json_tasklist;
+        $result[self::ERRORS] = $db_error;
         return $json_tasklist;
     }
 

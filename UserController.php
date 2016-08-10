@@ -42,7 +42,9 @@ class UserController extends Controller {
             $registered_user->setUser_password($userPassword);
             $user_operator->createUser($registered_user, $error);
         } 
-        echo $registered_user->getObjectAsJson();
+        $result[self::USER] = $registered_user->getObjectAsJson();
+        $result[self::ERRORS] = $error;
+        return json_encode($result);
     }
     
     protected function loginUser($http_request){
@@ -64,7 +66,9 @@ class UserController extends Controller {
             
             //CREATE SESSION
         }
-        echo $user->getObjectAsJson();
+        $result[self::USER] = $user->getObjectAsJson();
+        $result[self::ERRORS] = $error;
+        return $result;
     }
 
 
@@ -73,10 +77,10 @@ class UserController extends Controller {
     public function executeRequest($http_request) {
         if (isset($http_request[self::ACTION])){
             if ($http_request[self::ACTION] == self::REGISTER_ACTION){
-                $this->registerUser($http_request);
+                echo $this->registerUser($http_request);
             }
             if ($http_request[self::ACTION] == self::LOGIN_ACTION){
-                $this->loginUser($http_request);
+                echo $this->loginUser($http_request);
             }
         }
     }
