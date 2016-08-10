@@ -23,12 +23,8 @@ class DB_UserOperator extends DB_Connector {
         $user = FALSE;
         if (($result) && (mysqli_affected_rows($result))) {
             $row = mysqli_fetch_assoc($result);
-            $user_id = $row["user_id"];
-            $user_login = $row["user_login"];
-            $user_email = $row["user_email"];
-            $user_password = $row["user_password"];
-            $user_date_registration = $row["user_date_registration"];
-            $user = new DB_MobileUser($user_id, $user_login, $user_email, $user_password, $user_date_registration);
+            $user = new DB_MobileUser();
+            $user->setAllFromArray($row);
         } 
         $this->closeConnection();
         return $user;
@@ -42,12 +38,8 @@ class DB_UserOperator extends DB_Connector {
         $user = FALSE;
         if (($result) && (mysqli_affected_rows($result))) {
             $row = mysqli_fetch_assoc($result);
-            $user_id = $row["user_id"];
-            $user_login = $row["user_login"];
-            $user_email = $row["user_email"];
-            $user_password = $row["user_password"];
-            $user_date_registration = $row["user_date_registration"];
-            $user = new DB_MobileUser($user_id, $user_login, $user_email, $user_password, $user_date_registration);
+            $user = new DB_MobileUser();
+            $user->setAllFromArray($row);    
         } 
         $this->closeConnection();
         return $user;
@@ -79,24 +71,24 @@ class DB_UserOperator extends DB_Connector {
         
     }
 
-    public function createUser( string $user_login,string  $user_email,string $user_password, &$db_error){
+    public function createUser(DB_MobileUser &$user, &$db_error){
         $sqlStatement = 'insert into `user_registration_table`(`user_login`,`user_email`,`user_password`,`user_date_registration`) '.
             'VALUES({USER_LOGIN},{USER_EMAIL},{USER_PASSWORD},{USER_DATE_REGISTRATION})';
-        $current_data = date();
-        $passwd = $user_password.$current_data;
-        $passwd = sha1($passwd);
-        $user = FALSE;
-        str_replace("{USER_LOGIN}", $user_login, $sqlStatement);
-        str_replace("{USER_EMAIL}", $user_email, $sqlStatement);
-        str_replace("{USER_PASSWORD}", $passwd, $sqlStatement);
-        str_replace("{USER_DATE_REGISTRATION}", $current_data, $sqlStatement);
+        $user->setUser_date_registration(date);
+        $user->setUser_password(sha1($user->getUser_password().$user->getUser_date_registration()));
+        str_replace("{USER_LOGIN}", $user->getUser_login(), $sqlStatement);
+        str_replace("{USER_EMAIL}", $user->getUser_email(), $sqlStatement);
+        str_replace("{USER_PASSWORD}", $user->getUser_password(), $sqlStatement);
+        str_replace("{USER_DATE_REGISTRATION}", $user->getUser_date_registration(), $sqlStatement);
         $insert_result = $this->executeInsertSQL($sql_statement, $db_error);
         if($insert_result){
-            $user = new DB_MobileUser($insert_result, $user_login, $user_email, $user_password,$current_data);
+            $user->setUser_id($insert_result);
         }
         $this->closeConnection();
-        return $user;
+        return ($insert_result != FALSE);
     }
-
-//put your code here
 }
+    
+    
+
+

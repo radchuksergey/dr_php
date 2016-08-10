@@ -43,7 +43,8 @@ class DB_TaskOperator extends DB_Connector{
         $task = FALSE;
         if($db_result && mysql_affected_rows($db_result) > 0){
             $row = mysqli_fetch_assoc($db_result);
-            $task = $this->createTaskFromDbRecord($row);
+            $task = new DB_UserTask();
+            $task->setAllFromArray($row);
         }
         $this->closeConnection();
         return $task;
@@ -62,7 +63,8 @@ class DB_TaskOperator extends DB_Connector{
         $task = FALSE;
         if($db_result && mysql_affected_rows($db_result) > 0){
             $row = mysqli_fetch_assoc($db_result);
-            $task = $this->createTaskFromDbRecord($row);
+            $task = new DB_UserTask();
+            $task->setAllFromArray($row);
         }
         $this->closeConnection();
         return $task;
@@ -81,7 +83,8 @@ class DB_TaskOperator extends DB_Connector{
         if ($db_result and mysqli_affected_rows($db_result) > 0){
             $i = 0;
             while ($row = mysqli_fetch_assoc($db_result)) {
-                $task = $this->createTaskFromDbRecord($row);
+                $task = new DB_UserTask();
+                $task->setAllFromArray($row);
                 $tasklist[$i] = $task;
                 $i++;
             }

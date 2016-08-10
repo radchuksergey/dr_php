@@ -1,5 +1,7 @@
 <?php
 
+use JsonConvertable;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,7 +13,7 @@
  *
  * @author sergey
  */
-class UserTask {
+class DB_UserTask extends JsonConvertable{
    
     private $task_id;
     private $task_type;
@@ -25,6 +27,13 @@ class UserTask {
     private $task_date_last_use;
     private $task_usage_count;
     private $task_is_favorite;
+    
+    function __construct() {
+        foreach($this as $key=>$value){
+            $value = FALSE;
+        };
+    }
+    
     function getTask_type() {
         return $this->task_type;
     }
