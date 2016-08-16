@@ -77,13 +77,7 @@ class DB_MobileUser extends JsonConvertable{
         $this->user_date_registration = $user_date_registration;
     }
     
-    public function getCheckSum(){
-        $str = '';
-        foreach ($this as $key=>$value) {
-            $str = $str.$value;
-        }
-        return sha1($str);
-    }
+    
     
     public function createEncryptedPassword(){
         if($this->user_date_registration){

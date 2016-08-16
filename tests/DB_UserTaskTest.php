@@ -13,16 +13,14 @@ class DB_UserTaskTest extends \PHPUnit_Framework_TestCase
     /**
      * @var DB_UserTask
      */
-    protected $db_Connector;
-
+    
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp()
     {
-        $this->db_Connector = new Test_DB_Connector();
-        $this->db_Connector->clearDataFromTables();
+        
     }
 
     /**

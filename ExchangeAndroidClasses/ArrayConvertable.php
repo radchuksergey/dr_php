@@ -36,4 +36,12 @@ class ArrayConvertable {
         }
         
     }
+    
+    public function getCheckSum(){
+        $str = '';
+        foreach ($this as $key=>$value) {
+            $str = $str.$value;
+        }
+        return sha1($str);
+    }
 }
