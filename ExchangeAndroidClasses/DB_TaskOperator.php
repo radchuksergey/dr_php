@@ -67,8 +67,10 @@ class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
         $sqlStatement = str_replace("{USERID}", $user_id, $sqlStatement);
         $db_result = $this->executeSQL($sqlStatement, $db_error);
         $task = FALSE;
-        if($db_result && mysql_affected_rows($db_result) > 0){
+        if($db_result && ($db_result->num_rows > 0)){
             $row = mysqli_fetch_assoc($db_result);
+            $row['task_id'] = intval($row['task_id']);
+            $row['user_id'] = intval($row['user_id']);
             $task = new DB_UserTask();
             $task->setAllFromArray($row);
         }
@@ -86,7 +88,7 @@ class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
         $sqlStatement = str_replace("{USERID}", $user_id, $sqlStatement);
         $tasklist = FALSE;
         $db_result = $this->executeSQL($sqlStatement, $db_error);
-        if ($db_result and mysqli_affected_rows($db_result) > 0){
+        if ($db_result and ($db_result->num_rows > 0)){
             $i = 0;
             while ($row = mysqli_fetch_assoc($db_result)) {
                 $task = new DB_UserTask();
