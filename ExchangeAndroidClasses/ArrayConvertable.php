@@ -23,7 +23,7 @@ class ArrayConvertable {
             $this->{$property->getName()} = FALSE;
         };
     }
-    public function setAllFromArray(array $array){
+    public function setAllFromArray($array){
         
         $reflector = new ReflectionClass($this);
         $properties = $reflector->getProperties();
@@ -35,11 +35,5 @@ class ArrayConvertable {
             }
         }
         
-        
-        /*foreach ($this as $key=>$value){
-            if(isset($array[$key])){
-                $value = $array[$key];
-            }
-        }*/
     }
 }
