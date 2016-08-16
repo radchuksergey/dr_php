@@ -23,12 +23,12 @@ class AndroidController extends Controller {
         if (isset($http_request[self::ACTION])){
             $action = $http_request[self::ACTION];
             switch ($action){
-                case self::REGISTER_ACTION;  
+                case self::REGISTER_ACTION:;  
                 case self::LOGIN_ACTION: $controller =  new UserController(); break;
-                case self::TASK;
-                case self::DELETE_TASK;
-                case self::CREATE_TASK;
-                case self::UPDATE_TASK;
+                case self::TASK:;
+                case self::DELETE_TASK:;
+                case self::CREATE_TASK:;
+                case self::UPDATE_TASK:;
                 case self::TASKLIST; $controller = new TaskController();break;
          
             }
