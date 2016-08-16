@@ -1,6 +1,10 @@
 <?php
+namespace ExchangeAndroidClasses;
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_Connector.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_MobileUser.php';
 
-use DB_Connector;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,7 +17,7 @@ use DB_Connector;
  *
  * @author sergey
  */
-class DB_UserOperator extends DB_Connector {
+class DB_UserOperator extends \ExchangeAndroidClasses\DB_Connector {
    
     
     public function getUserByEmail(string $user_email, &$db_error) {
@@ -72,7 +76,7 @@ class DB_UserOperator extends DB_Connector {
     public function createUser(DB_MobileUser &$user, &$db_error){
         $sqlStatement = 'insert into `user_registration_table`(`user_login`,`user_email`,`user_password`,`user_date_registration`) '.
             'VALUES({USER_LOGIN},{USER_EMAIL},{USER_PASSWORD},{USER_DATE_REGISTRATION})';
-        $user->setUser_date_registration(date);
+        $user->setUser_date_registration(date());
         $user->setUser_password(sha1($user->getUser_password().$user->getUser_date_registration()));
         str_replace("{USER_LOGIN}", $user->getUser_login(), $sqlStatement);
         str_replace("{USER_EMAIL}", $user->getUser_email(), $sqlStatement);

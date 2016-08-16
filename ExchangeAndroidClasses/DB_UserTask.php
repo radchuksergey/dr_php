@@ -1,6 +1,8 @@
 <?php
 
-use JsonConvertable;
+namespace ExchangeAndroidClasses;
+require_once __DIR__.DIRECTORY_SEPARATOR.'JsonConvertable.php';
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,25 +15,23 @@ use JsonConvertable;
  *
  * @author sergey
  */
-class DB_UserTask extends JsonConvertable{
+class DB_UserTask extends \ExchangeAndroidClasses\JsonConvertable{
    
-    private $task_id;
-    private $task_type;
-    private $user_id;
-    private $task_file_name;
-    private $task_instruction;
-    private $task_image_small;
-    private $task_image_large;
-    private $task_date_create;
-    private $task_date_last_modify;
-    private $task_date_last_use;
-    private $task_usage_count;
-    private $task_is_favorite;
+    protected $task_id;
+    protected $task_type;
+    protected $user_id;
+    protected $task_file_name;
+    protected $task_instruction;
+    protected $task_image_small;
+    protected $task_image_large;
+    protected $task_date_create;
+    protected $task_date_last_modify;
+    protected $task_date_last_use;
+    protected $task_usage_count;
+    protected $task_is_favorite;
     
     function __construct() {
-        foreach($this as $key=>$value){
-            $value = FALSE;
-        };
+        parent::__construct();
     }
     
     function getTask_type() {

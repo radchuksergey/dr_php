@@ -1,6 +1,10 @@
 <?php
+namespace ExchangeAndroidClasses;
 
-use Controller;
+require_once __DIR__.DIRECTORY_SEPARATOR.'Controller.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_UserOperator.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_TaskOperator.php';
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,7 +17,9 @@ use Controller;
  *
  * @author Radchuk
  */
-class TaskController extends Controller{
+
+
+class TaskController extends \ExchangeAndroidClasses\Controller{
     
     const CREATE_TASK = 'create_task';
     const TASK_LIST = 'task_list';
@@ -35,7 +41,7 @@ class TaskController extends Controller{
             $user->setObjectFieldsFromJson($http_request[self::USER]);
         }
         $db_user = $this->user_operator->getUserById($user->getUser_id(), $db_error);
-        if ($db_user->getCheckSum() = $user->getCheckSum()){
+        if ($db_user->getCheckSum() == $user->getCheckSum()){
             return $db_user;
         }
         else {

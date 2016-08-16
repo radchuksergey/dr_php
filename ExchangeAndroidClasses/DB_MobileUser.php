@@ -1,4 +1,8 @@
 <?php
+namespace ExchangeAndroidClasses;
+require_once  __DIR__.DIRECTORY_SEPARATOR.'JsonConvertable.php';
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -11,22 +15,21 @@
  *
  * @author sergey
  */
+
 class DB_MobileUser extends JsonConvertable{
     //put your code here
     //user_id`,`user_login`,`user_email`,`user_password`,`user_date_registration`
-    private $user_id;
-    private $user_login;
-    private $user_email;
-    private $user_password;
-    private $user_date_registration;
+    protected $user_id = FALSE;
+    protected $user_login  = FALSE;
+    protected $user_email = FALSE;
+    protected $user_password = FALSE;
+    protected $user_date_registration = FALSE;
     
 
-    
     function __construct() {
-        foreach($this as $key=>$value){
-            $value = FALSE;
-        };
+        parent::__construct();
     }
+    
     
     function getUser_id() {
         return $this->user_id;
@@ -51,7 +54,7 @@ class DB_MobileUser extends JsonConvertable{
     public function isPaswordCorrect($password){
         $pass_str = $password.$this->user_date_registration;
         $pass_str = sha1($pass_str);
-        return $this->user_password = $pass_str;     
+        return $this->user_password == $pass_str;     
     }
     
     function setUser_id($user_id) {
@@ -80,6 +83,12 @@ class DB_MobileUser extends JsonConvertable{
             $str = $str.$value;
         }
         return md5($str);
+    }
+    
+    public function createEncryptedPassword(){
+        if($this->user_date_registration){
+            return sha1($this->user_password.$this->user_date_registration);
+        }
     }
 
 }

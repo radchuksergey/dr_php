@@ -1,5 +1,8 @@
 <?php
 
+namespace ExchangeAndroidClasses;
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_Config.php';
+
 use DB_Config;
 
 /*

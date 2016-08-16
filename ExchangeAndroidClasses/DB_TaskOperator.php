@@ -1,8 +1,12 @@
 <?php
+namespace ExchangeAndroidClasses;
 
-use DB_Connector;
-use DB_UserTask;
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_Connector.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_UserTask.php';
 
+
+
+use ExchangeAndroidClasses\DB_UserTask;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,7 +18,7 @@ use DB_UserTask;
  *
  * @author sergey
  */
-class DB_TaskOperator extends DB_Connector{
+class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
     
     private function createTaskFromDbRecord($db_record){
         $task = new DB_UserTask();
