@@ -20,11 +20,7 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'DB_TaskOperator.php';
 
 
 class TaskController extends \ExchangeAndroidClasses\Controller{
-    
-    const CREATE_TASK = 'create_task';
-    const TASK_LIST = 'task_list';
-    const UPDATE_TASK = 'update_task';
-    const DELETE_TASK = 'delete_task';
+   
    
     private $user_operator ;
     private $task_operator;
@@ -53,16 +49,16 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
     public function executeRequest($http_request) {
         if (isset($http_request[self::ACTION])){
             if($http_request[self::ACTION] == self::CREATE_TASK){
-                echo $this->createTask($http_request);
+                return $this->createTask($http_request);
             }
             if($http_request[self::ACTION] == self::DELETE_TASK){
-                echo $this->deleteTask($http_request);
+                return $this->deleteTask($http_request);
             }
             if($http_request[self::ACTION] == self::TASK_LIST){
-                echo $this->getTaskList($http_request);
+                return $this->getTaskList($http_request);
             }
             if($http_request[self::ACTION] == self::UPDATE_TASK){
-                echo $this->updateTask($http_request);    
+                return $this->updateTask($http_request);    
             }
         }
         

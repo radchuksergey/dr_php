@@ -19,6 +19,15 @@ abstract class Controller {
     const USER = 'user';
     const TASK = 'task';
     
+    
+    const LOGIN_ACTION = 'login';
+    const REGISTER_ACTION = 'register';
+    
+    const CREATE_TASK = 'create_task';
+    const TASK_LIST = 'task_list';
+    const UPDATE_TASK = 'update_task';
+    const DELETE_TASK = 'delete_task';
+    
     const ANSWER = 'answer';
     const CREATED = 'created';
     const DELETED = 'deleted';

@@ -16,8 +16,7 @@ require_once __DIR__.DIRECTORY_SEPARATOR.'Controller.php';
 class UserController extends \ExchangeAndroidClasses\Controller {
     
     
-    const LOGIN_ACTION = 'login';
-    const REGISTER_ACTION = 'register';
+    
     
     protected function registerUser($http_request){
         $userlogin = "";
@@ -77,10 +76,10 @@ class UserController extends \ExchangeAndroidClasses\Controller {
     public function executeRequest($http_request) {
         if (isset($http_request[self::ACTION])){
             if ($http_request[self::ACTION] == self::REGISTER_ACTION){
-                echo $this->registerUser($http_request);
+                return $this->registerUser($http_request);
             }
             if ($http_request[self::ACTION] == self::LOGIN_ACTION){
-                echo $this->loginUser($http_request);
+                return $this->loginUser($http_request);
             }
         }
     }
