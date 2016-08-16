@@ -79,10 +79,10 @@ class DB_MobileUser extends JsonConvertable{
     
     public function getCheckSum(){
         $str = '';
-        foreach ($this as $key=>$value){
+        foreach ($this as $key=>$value) {
             $str = $str.$value;
         }
-        return md5($str);
+        return sha1($str);
     }
     
     public function createEncryptedPassword(){

@@ -23,7 +23,7 @@ class DB_Connector {
     protected  $mysqli_connection;
 
     protected function establisheMySqli_Connection(){
-        $this->mysqli_connection = new mysqli(DB_Config::getServer_Name(), DB_Config::getDB_Username(), 
+        $this->mysqli_connection = new \mysqli(DB_Config::getServer_Name(), DB_Config::getDB_Username(), 
                 DB_Config::getDB_Password(), DB_Config::getDB_Name()); ;   
     }
     
