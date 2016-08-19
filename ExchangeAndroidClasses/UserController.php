@@ -22,15 +22,16 @@ class UserController extends \ExchangeAndroidClasses\Controller {
         $userlogin = "";
         $userEmail = "";
         $userPassword = "";
-        $error = "";
+        $error = FALSE;
         $user_operator = new DB_UserOperator();
+        
         if (isset($http_request["userlogin"])){
             $userlogin = $http_request["userlogin"];
         }
         if(isset($http_request["useremail"])){
             $userEmail = $http_request["useremail"];
         }
-        if(isset($http_request["userPassword"])){
+        if(isset($http_request["userpassword"])){
             $userPassword = $http_request["userpassword"];
         }
         $existed_user = $user_operator->getUserByEmail($userEmail, $error);
@@ -41,32 +42,44 @@ class UserController extends \ExchangeAndroidClasses\Controller {
             $registered_user->setUser_password($userPassword);
             $user_operator->createUser($registered_user, $error);
         } 
+        else{
+            $error = self::ERROR_USER_EXIST;
+        }
         $result[self::USER] = $registered_user->getObjectAsJson();
         $result[self::ERRORS] = $error;
-        return json_encode($result);
+        return $result;
     }
     
     protected function loginUser($http_request){
         $user_operator = new DB_UserOperator();
         $userEmail = "";
         $userPassword = "";
-        $result_array = "";
-        $error = "";
+        $result=FALSE;
+        $error = FALSE;
         
         if(isset($http_request["useremail"])){
             $userEmail = $http_request["useremail"];
         }
-        if(isset($http_request["userPassword"])){
+        if(isset($http_request["userpassword"])){
             $userPassword = $http_request["userpassword"];
         }
-        $user = $user_operator->getUserByEmail($userEmail, $error);
-        
-        if(($user) && ($user->isPaswordCorrect($userPassword))){
-            
-            //CREATE SESSION
+        $userFromDB = $user_operator->getUserByEmail($userEmail, $error); 
+        if($userFromDB->getUser_id()){
+            if($userFromDB->isPaswordCorrect($userPassword)){
+                $result[self::USER] = $userFromDB->getObjectAsJson();
+                $result[self::ERRORS] = $error;
+            }
+            else{
+                $emptyUser = new DB_MobileUser();
+                $result[self::USER] = $emptyUser->getObjectAsJson();
+                $result[self::ERRORS] = self::ERROR_PASSWORD_USER_INCORRECT;
+            }
         }
-        $result[self::USER] = $user->getObjectAsJson();
-        $result[self::ERRORS] = $error;
+        else{
+            $emptyUser = new DB_MobileUser();
+            $result[self::USER] = $emptyUser->getObjectAsJson();
+            $result[self::ERRORS] = $error;
+        }
         return $result;
     }
 

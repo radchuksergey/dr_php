@@ -31,8 +31,7 @@ class DB_UserOperator extends \ExchangeAndroidClasses\DB_Connector {
             $user->setAllFromArray($row);    
         }
         $this->closeConnection();
-        return $user;
-        
+        return $user;    
     }
     
     public function getUserById($user_id, &$db_error){

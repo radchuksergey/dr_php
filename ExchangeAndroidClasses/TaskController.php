@@ -30,7 +30,7 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
        $this->task_operator = new DB_TaskOperator();
     }
 
-    function isUserValid($http_request,&$db_error){
+    protected function isUserValid($http_request,&$db_error){
         
         $user = new DB_MobileUser();        
         if (isset($http_request[self::USER])){
@@ -64,8 +64,8 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
         
     }
     
-    protected function createTask($http_request,&$db_error){
-        $db_error = '';
+    protected function createTask($http_request){
+        $db_error = FALSE;
         $result = '';
         $task = FALSE;
         if($this->isUserValid($http_request, $db_error)){
@@ -84,10 +84,11 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
         return json_encode($result);    
     }
     
-    protected function deleteTask($http_request,&$db_error){
+    protected function deleteTask($http_request){
         $deleted = FALSE;
         $result = '';
-        if($this->isUserValid($http_request)){ 
+        $db_error = FALSE;
+        if($this->isUserValid($http_request,$db_error)){ 
            if(isset($http_request[self::TASK])){
             $task =new DB_UserTask();
             $task->setObjectFieldsFromJson($http_request[self::TASK]);
@@ -99,22 +100,23 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
         return json_encode($result);
     }
     
-    protected function updateTask($http_request,&$db_error){
+    protected function updateTask($http_request){
         $updated = FALSE;
-        if($this->isUserValid($http_request)){ 
+        $db_error = FALSE;
+        if($this->isUserValid($http_request,$db_error)){ 
            if(isset($http_request[self::TASK])){
                 $task =new DB_UserTask();
                 $task->setObjectFieldsFromJson($http_request[self::TASK]);
-                $updated =  $this->task_operator->deleteTask($task->getTask_id(), $db_error);
+                $updated =  $this->task_operator->updateTask($task, $db_error);
            }
         }
-        return $updated;
         $result[self::UPDATED] = $updated;
         $result[self::ERRORS] = $db_error;
-        echo json_encode($result);
+        return json_encode($result);
     }
     
-    protected function getTaskList($http_request,&$db_error){
+    protected function getTaskList($http_request){
+        $db_error = FALSE;
         $user = $this->isUserValid($http_request, $db_error);
         $json_tasklist = FALSE;
         if ($user){
@@ -122,15 +124,15 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
             if($tasklist){
                 $json_tasklist = '';
                 for($i = 0; $i < count($tasklist); $i++){
-                    $task = $tasklist[i];
-                    $json_tasklist[$task->getTask_id()] = $task->getObjectAsJson();
+                    $task = $tasklist[$i];
+                    $json_tasklist[$i] = $task->getObjectAsJson();
                 }
                
             }
         }
-        $result[self::TASKLIST] = $json_tasklist;
+        $result[self::TASK_LIST] = json_encode($json_tasklist);
         $result[self::ERRORS] = $db_error;
-        return $json_tasklist;
+        return $result;
     }
 
 }

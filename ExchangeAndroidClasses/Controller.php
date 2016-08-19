@@ -35,6 +35,8 @@ abstract class Controller {
     const TASKLIST = 'tasklist';
     
     const ERRORS = 'errors';
+    const ERROR_USER_EXIST = 'user already exist';
+    const ERROR_PASSWORD_USER_INCORRECT = 'users password incorrect';
 
     public abstract function executeRequest($http_request);
 }
