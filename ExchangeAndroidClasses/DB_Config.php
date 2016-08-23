@@ -17,6 +17,9 @@ class DB_Config {
     private static $servername = "localhost";
     private static $db_name = "u710756719_plan";
     private static $db_password = "Y6rUFWtMGC";
+    //test password = fbikLMvyx2
+    // test db name = u710756719_testA
+    // test db login = u710756719_testa
     
     private static $user_registration_table = "user_registration_table";
     private static $user_task_table = "user_task_table";
