@@ -12,11 +12,21 @@
  * @author sergey
  */
 class DB_Config {
+    
+    private static $username = "droneplan";
+    private static $servername = "localhost";
+    private static $db_name = "droneplan";
+    private static $db_password = "droneplan";
     //put your code here
-    private static $username = "u710756719_super";
+    /*private static $username = "u710756719_super";
     private static $servername = "localhost";
     private static $db_name = "u710756719_plan";
-    private static $db_password = "Y6rUFWtMGC";
+    private static $db_password = "Y6rUFWtMGC";*/
+
+    /*private static $username = "u710756719_testa";
+    private static $servername = "localhost";
+    private static $db_name = "u710756719_testa";
+    private static $db_password = "fbikLMvyx2";*/
     //test password = fbikLMvyx2
     // test db name = u710756719_testA
     // test db login = u710756719_testa
@@ -57,3 +67,4 @@ class DB_Config {
     }
     
 }
+	

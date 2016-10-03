@@ -29,7 +29,7 @@ class AndroidController extends Controller {
                 case self::DELETE_TASK:;
                 case self::CREATE_TASK:;
                 case self::UPDATE_TASK:;
-                case self::TASKLIST; $controller = new TaskController();break;
+                case self::TASK_LIST; $controller = new TaskController();break;
          
             }
         }
@@ -38,6 +38,8 @@ class AndroidController extends Controller {
             
         }
         echo $result;
+        //print_r($result);
     }
 
 }
+	

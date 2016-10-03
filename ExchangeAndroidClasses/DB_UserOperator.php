@@ -30,6 +30,10 @@ class DB_UserOperator extends \ExchangeAndroidClasses\DB_Connector {
             $row['user_id'] = intval($row['user_id']);
             $user->setAllFromArray($row);    
         }
+        else if($result && ($result->num_rows == 0)){
+             $db_error = "User not found";
+        }
+
         $this->closeConnection();
         return $user;    
     }
@@ -91,6 +95,7 @@ class DB_UserOperator extends \ExchangeAndroidClasses\DB_Connector {
         $insert_result = $this->executeInsertSQL($sqlStatement, $db_error);
         if($insert_result){
             $user->setUser_id($insert_result);
+            $db_error = FALSE;
         }
         $this->closeConnection();
         $result = $user->getUser_id() ;
@@ -101,3 +106,4 @@ class DB_UserOperator extends \ExchangeAndroidClasses\DB_Connector {
     
 
 
+		

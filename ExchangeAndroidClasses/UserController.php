@@ -47,7 +47,7 @@ class UserController extends \ExchangeAndroidClasses\Controller {
         }
         $result[self::USER] = $registered_user->getObjectAsJson();
         $result[self::ERRORS] = $error;
-        return $result;
+        return json_encode($result);
     }
     
     protected function loginUser($http_request){
@@ -80,7 +80,7 @@ class UserController extends \ExchangeAndroidClasses\Controller {
             $result[self::USER] = $emptyUser->getObjectAsJson();
             $result[self::ERRORS] = $error;
         }
-        return $result;
+        return json_encode($result);
     }
 
 

@@ -132,7 +132,9 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
         }
         $result[self::TASK_LIST] = json_encode($json_tasklist);
         $result[self::ERRORS] = $db_error;
+        $result = json_encode($result);
         return $result;
     }
 
 }
+	
