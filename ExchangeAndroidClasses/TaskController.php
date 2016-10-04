@@ -37,8 +37,15 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
             $user->setObjectFieldsFromJson($http_request[self::USER]);
         }
         $db_user = $this->user_operator->getUserById($user->getUser_id(), $db_error);
-        if ($db_user->getCheckSum() == $user->getCheckSum()){
-            return $db_user;
+       
+        if($db_user->isPaswordCorrect($user->getUser_password())){
+            $user->setUser_password($user->createEncryptedPassword());
+            if($db_user->getCheckSum() == $user->getCheckSum()){
+                return $db_user;
+            }
+            else {
+                return FALSE;                
+            }
         }
         else {
             return FALSE;
