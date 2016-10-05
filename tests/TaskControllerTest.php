@@ -85,6 +85,7 @@ class TaskControllerTest extends \PHPUnit_Framework_TestCase
         $this->userOperator->createUser($user, $db_error);
         $this->assertTrue($user->getUser_id() > 0);
         $this->assertFalse($db_error);
+        $user->setUser_password($this->getUser()->getUser_password());
         $user_json = $user->getObjectAsJson();
         $request[Controller::USER] = $user_json;
         $userTask = $this->getTask($user);
@@ -109,9 +110,10 @@ class TaskControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result[Controller::UPDATED]);
         $request[Controller::ACTION] = Controller::TASK_LIST;
         $result_json = $this->taskController->executeRequest($request);
-        $result = json_decode($result_json[Controller::TASK_LIST],TRUE);
-        $this->assertTrue(count($result) == 1);
-        
+        $encoded_result = json_decode($result_json,TRUE);
+        $this->assertTrue($encoded_result[Controller::TASK_LIST] != "");
+        $result_arr = json_decode($encoded_result[Controller::TASK_LIST]);
+        $this->assertTrue(count($result_arr) == 1);
         $request[Controller::ACTION] = Controller::DELETE_TASK;
         $result_json = $this->taskController->executeRequest($request);
         $result = json_decode($result_json,TRUE);

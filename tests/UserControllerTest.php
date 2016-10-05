@@ -48,6 +48,7 @@ class UserControllerTest extends \PHPUnit_Framework_TestCase
         $request['useremail'] = 'sergo3030@mail.ru';
         $request['userpassword'] = 'amber2000';
         $result = $this->object->executeRequest($request);
+        $result = json_decode($result, TRUE);
         $this->assertTrue(isset($result[Controller::USER]));
         $this->assertTrue(isset($result[Controller::ERRORS]));
         $user = new DB_MobileUser;
@@ -59,6 +60,7 @@ class UserControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result[Controller::ERRORS]);
         $request[Controller::ACTION] = Controller::LOGIN_ACTION;
         $result = $this->object->executeRequest($request);
+        $result = json_decode($result, TRUE);
         $this->assertTrue(isset($result[Controller::USER]));
         $this->assertTrue(isset($result[Controller::ERRORS]));
         $loginedUser = new DB_MobileUser;
@@ -68,6 +70,7 @@ class UserControllerTest extends \PHPUnit_Framework_TestCase
         $request[Controller::ACTION] = Controller::LOGIN_ACTION;
         $request['useremail'] = 'sergo4040@mail.ru';
         $result = $this->object->executeRequest($request);
+        $result = json_decode($result, TRUE);
         $this->assertTrue(isset($result[Controller::USER]));
         $this->assertTrue(isset($result[Controller::ERRORS]));
         $loginedUser = new DB_MobileUser;
