@@ -29,7 +29,7 @@ class TaskControllerTest extends \PHPUnit_Framework_TestCase
         $this->userController = new UserController();
         $this->userOperator = new DB_UserOperator;
         $this->testDbConnector = new Test_DB_Connector();
-        $this->testDbConnector->clearDataFromTables();
+        //$this->testDbConnector->clearDataFromTables();
     }
 
     /**
@@ -38,7 +38,7 @@ class TaskControllerTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->testDbConnector->clearDataFromTables();
+        //$this->testDbConnector->clearDataFromTables();
     }
 
     /**
@@ -73,14 +73,27 @@ class TaskControllerTest extends \PHPUnit_Framework_TestCase
     }
     
    
-
+    public function testGetTaskListWithJson(){
+        
+        $userJson = '{"user_date_exit":"0006-5-24 03:00:00","user_date_last_login":"0006-5-24 03:00:00","user_date_registration":"0005-3-09 09:57:06","user_email":"sergo3030@mail.ru","user_firstname":"","user_id":"24","user_ip_exit":"","user_ip_registration":"","user_lastname":"","user_login":"jar","user_password":"amber2000","user_visit_count":"0"}';       
+        $request[Controller::ACTION] = Controller::TASK_LIST;
+        $request[Controller::USER] = $userJson;
+        $result = $this->taskController->executeRequest($request);
+        $this->assertTrue($result != "");
+    }
+    
+    
+    
+    
     /**
      * @covers ExchangeAndroidClasses\TaskController::executeRequest
      * @todo   Implement testExecuteRequest().
      */
+    
+       
     public function testExecuteRequest()
     {
-        $user = $this->getUser();
+       /* $user = $this->getUser();
         $db_error = FALSE;
         $this->userOperator->createUser($user, $db_error);
         $this->assertTrue($user->getUser_id() > 0);
@@ -117,7 +130,7 @@ class TaskControllerTest extends \PHPUnit_Framework_TestCase
         $request[Controller::ACTION] = Controller::DELETE_TASK;
         $result_json = $this->taskController->executeRequest($request);
         $result = json_decode($result_json,TRUE);
-        $this->assertTrue($result[Controller::DELETED]);
+        $this->assertTrue($result[Controller::DELETED]);*/
         
     }
 }

@@ -22,6 +22,8 @@ abstract class Controller {
     
     const LOGIN_ACTION = 'login';
     const REGISTER_ACTION = 'register';
+    const REMOVE_ALL_ACTION = 'removeall';
+    
     
     const CREATE_TASK = 'create_task';
     const TASK_LIST = 'task_list';
@@ -36,7 +38,7 @@ abstract class Controller {
     
     const ERRORS = 'errors';
     const ERROR_USER_EXIST = 'user already exist';
-    const ERROR_PASSWORD_USER_INCORRECT = 'users password incorrect';
+    const ERROR_PASSWORD_USER_INCORRECT = 'login or password incorrect';
 
     public abstract function executeRequest($http_request);
 }

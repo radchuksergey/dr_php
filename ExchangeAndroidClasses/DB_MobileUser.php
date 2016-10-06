@@ -19,10 +19,27 @@ require_once  __DIR__.DIRECTORY_SEPARATOR.'JsonConvertable.php';
 class DB_MobileUser extends JsonConvertable{
     //put your code here
     //user_id`,`user_login`,`user_email`,`user_password`,`user_date_registration`
+   
+    
+    /**
+     * @var int
+     */
     protected $user_id = FALSE;
+    /**
+     * @var string
+     */
     protected $user_login  = FALSE;
+    /**
+     * @var string
+     */
     protected $user_email = FALSE;
+    /**
+     * @var string
+     */
     protected $user_password = FALSE;
+    /**
+     * @var Date
+     */
     protected $user_date_registration = FALSE;
     
 

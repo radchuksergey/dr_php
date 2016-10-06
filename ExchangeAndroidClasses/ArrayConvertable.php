@@ -23,12 +23,45 @@ class ArrayConvertable {
             $this->{$property->getName()} = FALSE;
         };
     }
+    
+    /*
+     * @method
+     * @param string $annotation 
+     * @return string
+     */
+    private function decodeAnnotation($annotation){
+        $result = $annotation;
+        $result = str_replace("/", "", $result);
+        $result = str_replace("*", "", $result);
+        $result = preg_replace( '/[^[:print:]]/', '',$result);
+        $result = trim($result);
+        $result = explode(" ", $result);
+        return $result[count($result) - 1];   
+    }
+
+
     public function setAllFromArray($array){
         
         $reflector = new ReflectionClass($this);
+        
         $properties = $reflector->getProperties();
         foreach ($properties as $property){
             $propName = $property->getName();
+            $annotation = $property->getDocComment();
+            $typename = $this->decodeAnnotation($annotation);
+            if($typename == "int"){
+                 if(isset($array[$propName])){
+                    $this->{$propName} = intval($array[$propName]);
+                }    
+            }
+            else if ($typename == "Date"){
+                $this->{$propName} = strtotime($array[$propName]);
+            }
+            else{
+                if(isset($array[$propName])){
+                    $this->{$propName} = $array[$propName];
+                }
+            }
             //$propName = $this->{$property->getName()};
             if(isset($array[$propName])){
                 $this->{$propName} = $array[$propName];
@@ -43,5 +76,13 @@ class ArrayConvertable {
             $str = $str.$value;
         }
         return sha1($str);
+    }
+    
+    public function getAsArray(){
+        
+        foreach ($this as $key=>$value){
+            $result[$key] = $value;
+        }
+        return $result;
     }
 }

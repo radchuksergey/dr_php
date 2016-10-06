@@ -8,6 +8,7 @@ namespace ExchangeAndroidClasses;
 require_once __DIR__.DIRECTORY_SEPARATOR.'Controller.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'TaskController.php';
 require_once __DIR__.DIRECTORY_SEPARATOR.'UserController.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'ExtremeController.php';
 
 
 /**
@@ -30,6 +31,7 @@ class AndroidController extends Controller {
                 case self::CREATE_TASK:;
                 case self::UPDATE_TASK:;
                 case self::TASK_LIST; $controller = new TaskController();break;
+                case self::REMOVE_ALL_ACTION: $controller = new ExtremeController();break;
          
             }
         }

@@ -37,6 +37,7 @@ class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
         return $task;
     }
     
+   
     public function getTaskById($task_id, &$db_error){
         $sqlStatement = "SELECT `user_id`,`task_id` ,`task_file_name`,".
                 " `task_instruction`, `task_image_small`, `task_image_large`,".
@@ -154,6 +155,15 @@ class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
         $db_result = $this->executeSQL($sql_statement, $db_error);
         $this->closeConnection();
         return $db_result;
+    }
+    
+    
+    public function deleteAllTasksByUserId($user_id,&$db_error){
+        $sql_statement = "DELETE FROM `user_task_table` WHERE `user_id` = '{user_id}'";
+        $sql_statement = str_replace("{user_id}", $user_id, $sql_statement);
+        $db_result = $this->executeSQL($sql_statement, $db_error);
+        $this->closeConnection();
+        return $db_result;    
     }
 
 

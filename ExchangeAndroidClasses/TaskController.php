@@ -37,16 +37,9 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
             $user->setObjectFieldsFromJson($http_request[self::USER]);
         }
         $db_user = $this->user_operator->getUserById($user->getUser_id(), $db_error);
-       
-        if($db_user->isPaswordCorrect($user->getUser_password())){
-            $user->setUser_password($user->createEncryptedPassword());
-            if($db_user->getCheckSum() == $user->getCheckSum()){
-                return $db_user;
-            }
-            else {
-                return FALSE;                
-            }
-        }
+       if(($db_user->getUser_id()) && ($db_user->isPaswordCorrect($user->getUser_password()))){
+           return $db_user;
+       }
         else {
             return FALSE;
         }
@@ -126,19 +119,21 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
         $db_error = FALSE;
         $user = $this->isUserValid($http_request, $db_error);
         $json_tasklist = FALSE;
-        if ($user){
+        if ($user->getUser_id()){
             $tasklist = $this->task_operator->getTaskListByUserID($user->getUser_id(), $db_error);
             if($tasklist){
                 $json_tasklist = '';
                 for($i = 0; $i < count($tasklist); $i++){
                     $task = $tasklist[$i];
                     $json_tasklist[$i] = $task->getObjectAsJson();
+                    //$json_tasklist[$i] = $task->getAsArray();
                 }
                
             }
         }
         $result[self::TASK_LIST] = json_encode($json_tasklist);
         $result[self::ERRORS] = $db_error;
+        $decoded = json_decode($result[self::TASK_LIST]);
         $result = json_encode($result);
         return $result;
     }
