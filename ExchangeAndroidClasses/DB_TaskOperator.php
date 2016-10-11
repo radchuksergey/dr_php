@@ -20,29 +20,13 @@ use ExchangeAndroidClasses\DB_UserTask;
  */
 class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
     
-    private function createTaskFromDbRecord($db_record){
-        $task = new DB_UserTask();
-        $task->setUser_id($db_record["user_id"]);
-        $task->setTask_id($db_record["task_id"]);
-        $task->setTask_file_name($db_record["task_file_name"]);
-        $task->setTask_instruction($db_record["task_instruction"]);
-        $task->setTask_image_small($db_record["task_image_small"]);
-        $task->setTask_image_large($db_record["task_image_large"]);
-        $task->setTask_date_create($db_record["task_date_create"]);
-        $task->setTask_date_last_modify($db_record["task_date_last_modify"]);
-        $task->setTask_date_last_use($db_record["task_date_last_use"]);
-        $task->setTask_usage_count($db_record["task_usage_count"]);
-        $task->setTask_is_favorite($db_record["task_is_favorite"]); 
-        $task->setTask_type($db_record["task_type"]);
-        return $task;
-    }
-    
+     
    
     public function getTaskById($task_id, &$db_error){
         $sqlStatement = "SELECT `user_id`,`task_id` ,`task_file_name`,".
                 " `task_instruction`, `task_image_small`, `task_image_large`,".
                 " `task_date_create`, `task_date_last_modify`, `task_date_last_use`,".
-                " `task_usage_count`, `task_is_favorite`, `task_type` FROM `user_task_table` WHERE `task_id` = '{TASK_ID}' ";
+                " `task_usage_count`, `task_is_favorite`, `task_type`, `marked_as_delete` FROM `user_task_table` WHERE `task_id` = '{TASK_ID}' ";
         $sqlStatement = str_replace("{TASK_ID}", $task_id, $sqlStatement);
         $db_result = $this->executeSQL($sqlStatement, $db_error);
         $task = FALSE;
@@ -62,7 +46,7 @@ class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
         $sqlStatement = "SELECT `user_id`,`task_id` ,`task_file_name`,".
                 " `task_instruction`, `task_image_small`, `task_image_large`,".
                 " `task_date_create`, `task_date_last_modify`, `task_date_last_use`,".
-                " `task_usage_count`, `task_is_favorite`,`task_type` FROM `user_task_table` WHERE `task_file_name` = '{TASK_FILENAME}' ".
+                " `task_usage_count`, `task_is_favorite`,`task_type`, `marked_as_delete`  FROM `user_task_table` WHERE `task_file_name` = '{TASK_FILENAME}' ".
                 "AND `user_id` = '{USERID}'";
         $sqlStatement = str_replace("{TASK_FILENAME}", $task_name, $sqlStatement);
         $sqlStatement = str_replace("{USERID}", $user_id, $sqlStatement);
@@ -84,7 +68,7 @@ class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
         $sqlStatement = "SELECT `user_id`,`task_id` ,`task_file_name`,".
                 " `task_instruction`, `task_image_small`, `task_image_large`,".
                 " `task_date_create`, `task_date_last_modify`, `task_date_last_use`,".
-                " `task_usage_count`, `task_is_favorite`,`task_type` FROM `user_task_table` WHERE ".
+                " `task_usage_count`, `task_is_favorite`,`task_type`, `marked_as_delete`  FROM `user_task_table` WHERE ".
                 " `user_id` = '{USERID}'";
         $sqlStatement = str_replace("{USERID}", $user_id, $sqlStatement);
         $tasklist = FALSE;
@@ -106,19 +90,21 @@ class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
         $sql_statement = "UPDATE `user_task_table` SET `user_id`='{user_id}',`task_file_name`='{task_file_name}',".
                 "`task_type`='{task_type}',`task_status`='{task_status}',`task_instruction`='{task_instruction}',`task_image_small`='{task_image_small}',".
                 "`task_image_large`='{task_image_large}',`task_date_create`='{task_date_create}',`task_date_last_modify`='{task_date_last_modify}',".
-                "`task_date_last_use`='{task_date_last_use}',`task_usage_count`='{task_usage_count}',`task_is_favorite`='{task_is_favorite}' WHERE `task_id`='{task_id}'";
+                "`task_date_last_use`='{task_date_last_use}',`task_usage_count`='{task_usage_count}',`task_is_favorite`='{task_is_favorite}',".
+                "`marked_as_delete` = '{marked_as_delete}' WHERE `task_id`='{task_id}'";
         $sql_statement = str_replace("{user_id}", $userTask->getUser_id(), $sql_statement);
         $sql_statement = str_replace("{task_file_name}", $userTask->getTask_file_name(), $sql_statement);
         $sql_statement = str_replace("{task_type}", $userTask->getTask_type(), $sql_statement);
         $sql_statement = str_replace("{task_instruction}", $userTask->getTask_instruction(), $sql_statement);
         $sql_statement = str_replace("{task_image_small}", $userTask->getTask_image_small(), $sql_statement);
         $sql_statement = str_replace("{task_image_large}", $userTask->getTask_image_large(), $sql_statement);
-        $sql_statement = str_replace("{task_date_create}", $userTask->getTask_date_create(), $sql_statement);
-        $sql_statement = str_replace("{task_date_last_modify}", $userTask->getTask_date_last_modify(), $sql_statement);
-        $sql_statement = str_replace("{task_date_last_use}", $userTask->getTask_date_last_use(), $sql_statement);
+        $sql_statement = str_replace("{task_date_create}", $userTask->getTask_date_create_AsString(), $sql_statement);
+        $sql_statement = str_replace("{task_date_last_modify}", $userTask->getTask_date_last_modify_AsString(), $sql_statement);
+        $sql_statement = str_replace("{task_date_last_use}", $userTask->getTask_date_last_use_AsString(), $sql_statement);
         $sql_statement = str_replace("{task_usage_count}", $userTask->getTask_usage_count(), $sql_statement);
         $sql_statement = str_replace("{task_is_favorite}", $userTask->getTask_is_favorite(), $sql_statement);
         $sql_statement = str_replace("{task_id}", $userTask->getTask_id(), $sql_statement);
+        $sql_statement = str_replace("{marked_as_delete}", $userTask->getMarked_as_delete(), $sql_statement);
         $db_result = $this->executeSQL($sql_statement, $db_error);
         $this->closeConnection();
         return $db_result;
@@ -128,20 +114,21 @@ class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
     public function insertTask(DB_UserTask $userTask, &$db_error){
         $sqlStatement = "INSERT INTO `user_task_table`(`user_id`, `task_file_name`, `task_type`, `task_instruction`, ".
                 "`task_image_small`, `task_image_large`, `task_date_create`,`task_date_last_modify`, `task_date_last_use`,".
-                " `task_usage_count`, `task_is_favorite`) VALUES ('{user_id}','{task_file_name}','{task_type}','{task_instruction}',".
+                " `task_usage_count`, `task_is_favorite`, `marked_as_delete`) VALUES ('{user_id}','{task_file_name}','{task_type}','{task_instruction}',".
                 "'{task_image_small}','{task_image_large}','{task_date_create}','{task_date_last_modify}','{task_date_last_use}',".
-                "'{task_usage_count}','{task_is_favorite}')";
+                "'{task_usage_count}','{task_is_favorite}','{marked_as_delete}')";
         $sqlStatement = str_replace("{user_id}", $userTask->getUser_id(), $sqlStatement);
         $sqlStatement = str_replace("{task_file_name}", $userTask->getTask_file_name(), $sqlStatement);
         $sqlStatement = str_replace("{task_type}", $userTask->getTask_type(), $sqlStatement);
         $sqlStatement = str_replace("{task_instruction}", $userTask->getTask_instruction(), $sqlStatement);
         $sqlStatement = str_replace("{task_image_small}", $userTask->getTask_image_small(), $sqlStatement);
         $sqlStatement = str_replace("{task_image_large}", $userTask->getTask_image_large(), $sqlStatement);
-        $sqlStatement = str_replace("{task_date_create}", $userTask->getTask_date_create(), $sqlStatement);
-        $sqlStatement = str_replace("{task_date_last_modify}", $userTask->getTask_date_last_modify(), $sqlStatement);
-        $sqlStatement = str_replace("{task_date_last_use}", $userTask->getTask_date_last_use(), $sqlStatement);
+        $sqlStatement = str_replace("{task_date_create}", $userTask->getTask_date_create_AsString(), $sqlStatement);
+        $sqlStatement = str_replace("{task_date_last_modify}", $userTask->getTask_date_last_modify_AsString(), $sqlStatement);
+        $sqlStatement = str_replace("{task_date_last_use}", $userTask->getTask_date_last_use_AsString(), $sqlStatement);
         $sqlStatement = str_replace("{task_usage_count}", $userTask->getTask_usage_count(), $sqlStatement);
         $sqlStatement = str_replace("{task_is_favorite}", $userTask->getTask_is_favorite(), $sqlStatement);
+        $sqlStatement = str_replace("{marked_as_delete}", $userTask->getMarked_as_delete(), $sqlStatement);
         $insert_result = $this->executeInsertSQL($sqlStatement, $db_error);
         if($insert_result){
             $userTask->setTask_id($insert_result);

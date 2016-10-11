@@ -66,8 +66,31 @@ class DB_UserTask extends \ExchangeAndroidClasses\JsonConvertable{
      */
     protected $task_is_favorite;
     
+    /**
+     * @var int
+     */
+    protected $marked_as_delete;
+    
     function __construct() {
         parent::__construct();
+    }
+    
+    /**
+     * 
+     * @return int
+     */
+    function getMarked_as_delete(){
+        return $this->marked_as_delete;
+    }
+    
+    /**
+     * 
+     * @param int $marked_as_delete
+     * @return void Description
+     */
+    
+    function setMarked_as_delete($marked_as_delete){
+        $this->marked_as_delete = $marked_as_delete;
     }
     
     
@@ -124,11 +147,19 @@ class DB_UserTask extends \ExchangeAndroidClasses\JsonConvertable{
         return $this->task_image_large;
     }
     /**
-    * @return string
+    * @return Date
     */
     public function getTask_date_create() {
         return $this->task_date_create;
     }
+    
+    /**
+     * @return string task_date_create
+     */
+    public function getTask_date_create_AsString(){
+        return date(self::DATE_FORMAT, $this->task_date_create);
+    } 
+
     /**
     * @return Date
     */
@@ -137,11 +168,29 @@ class DB_UserTask extends \ExchangeAndroidClasses\JsonConvertable{
     }
     
     /**
+     * @return string task_date_last_modify
+     */
+     public function getTask_date_last_modify_AsString() {
+        //return $this->task_date_last_modify;
+        return date(self::DATE_FORMAT, $this->getTask_date_last_modify());
+    }
+    
+    /**
     * @return Date
     */
     public function getTask_date_last_use() {
         return $this->task_date_last_use;
     }
+    
+    /**
+     * @return string Description
+     */
+    
+    public function getTask_date_last_use_AsString() {
+        //return $this->task_date_last_use;
+        return date(self::DATE_FORMAT,$this->getTask_date_last_use());
+    }
+    
     /**
     * @return int
     */

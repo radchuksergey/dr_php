@@ -15,7 +15,11 @@
 
 class ArrayConvertable {
     //put your code here
-    
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
+
+
+
     function __construct() {
         $reflector = new ReflectionClass($this);
         $properties = $reflector->getProperties();
@@ -63,9 +67,7 @@ class ArrayConvertable {
                 }
             }
             //$propName = $this->{$property->getName()};
-            if(isset($array[$propName])){
-                $this->{$propName} = $array[$propName];
-            }
+          
         }
         
     }
