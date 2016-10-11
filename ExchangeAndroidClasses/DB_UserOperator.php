@@ -85,13 +85,13 @@ class DB_UserOperator extends \ExchangeAndroidClasses\DB_Connector {
     public function createUser(DB_MobileUser &$user, &$db_error){
         $sqlStatement = "insert into `user_registration_table`(`user_login`,`user_email`,`user_password`,`user_date_registration`) ".
             "VALUES('{USER_LOGIN}','{USER_EMAIL}','{USER_PASSWORD}','{USER_DATE_REGISTRATION}')";
-        $user->setUser_date_registration(date('Y-m-d H:i:s'));
+        $user->setUser_date_registration(time());
         $user->setUser_password($user->createEncryptedPassword());
         //$user->setUser_password(sha1($user->getUser_password().$user->getUser_date_registration()));
         $sqlStatement = str_replace("{USER_LOGIN}", $user->getUser_login(), $sqlStatement);
         $sqlStatement = str_replace("{USER_EMAIL}", $user->getUser_email(), $sqlStatement);
         $sqlStatement = str_replace("{USER_PASSWORD}", $user->getUser_password(), $sqlStatement);
-        $sqlStatement = str_replace("{USER_DATE_REGISTRATION}", $user->getUser_date_registration(), $sqlStatement);
+        $sqlStatement = str_replace("{USER_DATE_REGISTRATION}", $user->getUser_date_registration_AsString(), $sqlStatement);
         $insert_result = $this->executeInsertSQL($sqlStatement, $db_error);
         if($insert_result){
             $user->setUser_id($insert_result);

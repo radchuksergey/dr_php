@@ -41,7 +41,7 @@ class DB_MobileUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsPaswordCorrect()
     {
-        $data = time();
+        $data = date(DB_MobileUser::DATE_FORMAT);
         $u["user_id"] = 50;
         $u["user_login"] = "sergo";
         $u["user_email"] = "sergo3030@mail.ru";
@@ -63,6 +63,7 @@ class DB_MobileUserTest extends \PHPUnit_Framework_TestCase
    
     public function testGetCheckSum()
     {
+        $data = date(DB_MobileUser::DATE_FORMAT);
         $user1 = new DB_MobileUser();
         $user2 = new DB_MobileUser();
         $data = time();
@@ -77,7 +78,7 @@ class DB_MobileUserTest extends \PHPUnit_Framework_TestCase
     }
     
     public function testCrateEncryptedPassword(){
-        $data = time();
+        $data = date(DB_MobileUser::DATE_FORMAT);
         $user = new DB_MobileUser();
         $user->setUser_password("password");
         $user->setUser_date_registration(time());
@@ -89,11 +90,12 @@ class DB_MobileUserTest extends \PHPUnit_Framework_TestCase
      * @todo   Implement testCreateEmptyUser().
      */
     public function testCreateFromJson(){
+        $data = date(DB_MobileUser::DATE_FORMAT);
         $u["user_id"] = 50;
         $u["user_login"] = "sergo";
         $u["user_email"] = "sergo3030@mail.ru";
         $u["user_password"] = "password";
-        $u["user_date_registration"] =time();
+        $u["user_date_registration"] =$data;
         $json_arr = json_encode($u);
         $user = new DB_MobileUser();
         $user->setObjectFieldsFromJson($json_arr);
@@ -101,23 +103,24 @@ class DB_MobileUserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($user->getUser_login(), $u["user_login"]);
         $this->assertEquals($user->getUser_email(), $u["user_email"]);
         $this->assertEquals($user->getUser_password(), $u["user_password"]);
-        $this->assertEquals($user->getUser_date_registration(), $u["user_date_registration"]);
+        $this->assertEquals($user->getUser_date_registration_AsString(), $u["user_date_registration"]);
     }
     
     
     public function testCreateFromArray(){
+        $data = date(DB_MobileUser::DATE_FORMAT);
         $u["user_id"] = 50;
         $u["user_login"] = "sergo";
         $u["user_email"] = "sergo3030@mail.ru";
         $u["user_password"] = "password";
-        $u["user_date_registration"] =time();
+        $u["user_date_registration"] = $data;
         $user = new DB_MobileUser();
         $user->setAllFromArray($u);
         $this->assertEquals($user->getUser_id(), $u["user_id"]);
         $this->assertEquals($user->getUser_login(), $u["user_login"]);
         $this->assertEquals($user->getUser_email(), $u["user_email"]);
         $this->assertEquals($user->getUser_password(), $u["user_password"]);
-        $this->assertEquals($user->getUser_date_registration(), $u["user_date_registration"]);    
+        $this->assertEquals($user->getUser_date_registration_AsString(), $u["user_date_registration"]);    
     }
     
     public function testCreateEmptyUser(){

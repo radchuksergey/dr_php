@@ -42,7 +42,7 @@ class DB_UserOperatorTest extends \PHPUnit_Framework_TestCase
     public function testGetUserByEmail()
     {
        $db_error = FALSE;
-        $data = time();
+        $data = date(DB_MobileUser::DATE_FORMAT);
         $u["user_login"] = "sergo";
         $u["user_email"] = "sergo3030@mail.ru";
         $u["user_password"] = "password";
@@ -66,7 +66,7 @@ class DB_UserOperatorTest extends \PHPUnit_Framework_TestCase
     public function testGetUserById()
     {
         $db_error = FALSE;
-        $data = time();
+         $data = date(DB_MobileUser::DATE_FORMAT);
         $u["user_login"] = "sergo";
         $u["user_email"] = "sergo3030@mail.ru";
         $u["user_password"] = "password";
@@ -91,7 +91,7 @@ class DB_UserOperatorTest extends \PHPUnit_Framework_TestCase
     public function testDeleteUserById()
     {
        $db_error = FALSE;
-        $data = time();
+         $data = date(DB_MobileUser::DATE_FORMAT);;
         $u["user_login"] = "sergo";
         $u["user_email"] = "sergo3030@mail.ru";
         $u["user_password"] = "password";
@@ -114,7 +114,7 @@ class DB_UserOperatorTest extends \PHPUnit_Framework_TestCase
     public function testUpdateUser()
     {
         $db_error = FALSE;
-        $data = time();
+        $data = date(DB_MobileUser::DATE_FORMAT);
         $u["user_login"] = "sergo";
         $u["user_email"] = "sergo3030@mail.ru";
         $u["user_password"] = "password";
@@ -138,7 +138,7 @@ class DB_UserOperatorTest extends \PHPUnit_Framework_TestCase
     public function testCreateUser()
     {
         $db_error = FALSE;
-        $data = time();
+         $data = date(DB_MobileUser::DATE_FORMAT);
         
         $u["user_login"] = "sergo";
         $u["user_email"] = "sergo3030@mail.ru";

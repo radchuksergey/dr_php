@@ -72,6 +72,31 @@ class ArrayConvertable {
         
     }
     
+    /**
+     * @return array $result
+     */
+    public function getAllAsStringArray(){
+        $reflector = new ReflectionClass($this);
+        $result = $this->getAsArray();
+        $properties = $reflector->getProperties();
+        foreach ($properties as $property){
+            
+            $propName = $property->getName();
+            $annotation = $property->getDocComment();
+            $typename = $this->decodeAnnotation($annotation);
+           
+            if($typename == "int"){
+                 $result[$propName] = strval($result[$propName]);
+            }
+            else if ($typename == "Date"){
+                $result[$propName] = date(self::DATE_FORMAT,$result[$propName]);
+            }
+
+        }
+        return $result;
+        
+    }
+    
     public function getCheckSum(){
         $str = '';
         foreach ($this as $key=>$value) {

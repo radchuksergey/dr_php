@@ -1,6 +1,9 @@
 <?php
 namespace ExchangeAndroidClasses;
 require_once __DIR__.DIRECTORY_SEPARATOR.'Controller.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_MobileUser.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_UserOperator.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.'DB_TaskOperator.php';
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,17 +38,17 @@ class UserController extends \ExchangeAndroidClasses\Controller {
             $userPassword = $http_request["userpassword"];
         }
         $existed_user = $user_operator->getUserByEmail($userEmail, $error);
-        $registered_user = new DB_MobileUser();
+        //$registered_user = new DB_MobileUser();
         if (!$existed_user->getUser_id()){
-            $registered_user->setUser_email($userEmail);
-            $registered_user->setUser_login($userlogin);
-            $registered_user->setUser_password($userPassword);
-            $user_operator->createUser($registered_user, $error);
+            $existed_user->setUser_email($userEmail);
+            $existed_user->setUser_login($userlogin);
+            $existed_user->setUser_password($userPassword);
+            $user_operator->createUser($existed_user, $error);
         } 
         else{
             $error = self::ERROR_USER_EXIST;
         }
-        $result[self::USER] = $registered_user->getObjectAsJson();
+        $result[self::USER] = $existed_user->getObjectAsJson();
         $result[self::ERRORS] = $error;
         return json_encode($result);
     }

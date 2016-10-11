@@ -67,9 +67,13 @@ class DB_MobileUser extends JsonConvertable{
     function getUser_date_registration() {
         return $this->user_date_registration;
     }
+    
+    function getUser_date_registration_AsString(){
+        return date(self::DATE_FORMAT, $this->getUser_date_registration());
+    }
 
     public function isPaswordCorrect($password){
-        $pass_str = $password.$this->user_date_registration;
+        $pass_str = $password.$this->getUser_date_registration_AsString();
         $pass_str = sha1($pass_str);
         return $this->user_password == $pass_str;     
     }
@@ -98,7 +102,7 @@ class DB_MobileUser extends JsonConvertable{
     
     public function createEncryptedPassword(){
         if($this->user_date_registration){
-            return sha1($this->user_password.$this->user_date_registration);
+            return sha1($this->user_password.$this->getUser_date_registration_AsString());
         }
     }
 

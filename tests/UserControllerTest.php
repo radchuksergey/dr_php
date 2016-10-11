@@ -43,7 +43,7 @@ class UserControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecuteRequest()
     {   
-        $request[Controller::ACTION] = Controller::REGISTER_ACTION;
+       /* $request[Controller::ACTION] = Controller::REGISTER_ACTION;
         $request['userlogin'] = 'sergo';
         $request['useremail'] = 'sergo3030@mail.ru';
         $request['userpassword'] = 'amber2000';
@@ -53,6 +53,7 @@ class UserControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($result[Controller::ERRORS]));
         $user = new DB_MobileUser;
         $user->setObjectFieldsFromJson($result[Controller::USER]);
+        $user->setUser_password('amber2000');
         $this->assertTrue($user->getUser_id() > 0);
         $this->assertTrue($user->getUser_login() == $request['userlogin']);
         $this->assertTrue($user->getUser_email() == $request['useremail']);
@@ -77,10 +78,49 @@ class UserControllerTest extends \PHPUnit_Framework_TestCase
         $loginedUser->setObjectFieldsFromJson($result[Controller::USER]);
         $emptyUser = new DB_MobileUser;
         $this->assertEquals($emptyUser->getCheckSum(), $loginedUser->getCheckSum());
-        //$this->assertEquals($result[Controller::ERRORS], Controller::ERROR_PASSWORD_USER_INCORRECT);
+        //$this->assertEquals($result[Controller::ERRORS], Controller::ERROR_PASSWORD_USER_INCORRECT);  */   
+    }
+    
+    public function testExecuteRequestRegisterUser(){
+        $userController = new UserController();
+        $request[Controller::ACTION] = Controller::REGISTER_ACTION;
+        $request['userlogin'] = 'sergo';
+        $request['useremail'] = 'sergo3030@mail.ru';
+        $request['userpassword'] = 'amber2000';
+        $result = $userController->executeRequest($request);
+        $result = json_decode($result, TRUE);
+        $this->assertTrue(isset($result[Controller::USER]));
+        $this->assertTrue(isset($result[Controller::ERRORS]));
         
+    }
+    
+    
+    public function testExecuteRequestLoginUser(){
+         $userController = new UserController();
+        $request[Controller::ACTION] = Controller::REGISTER_ACTION;
+        $request['userlogin'] = 'sergo';
+        $request['useremail'] = 'sergo3030@mail.ru';
+        $request['userpassword'] = 'amber2000';
+        $result = $userController->executeRequest($request);
+        $result = json_decode($result, TRUE);
+        $this->assertTrue(isset($result[Controller::USER]));
+        $this->assertTrue(isset($result[Controller::ERRORS]));
+        $user = new DB_MobileUser();
+        $user->setObjectFieldsFromJson($result[Controller::USER]);
+        $user->setUser_password('amber2000');
         
+        $request[Controller::ACTION] = Controller::LOGIN_ACTION;
+        $request['userlogin'] = 'sergo';
+        $request['useremail'] = 'sergo3030@mail.ru';
+        $request['userpassword'] = 'amber2000';
+        $result = $userController->executeRequest($request);
+        $result = json_decode($result, TRUE);
+        $this->assertTrue(isset($result[Controller::USER]));
+        $this->assertTrue(isset($result[Controller::ERRORS]));
+        $userExisted = new DB_MobileUser();
+        $userExisted->setObjectFieldsFromJson($result[Controller::USER]);
         
+        $this->assertTrue($result[Controller::ERRORS] == FALSE);
         
     }
 }

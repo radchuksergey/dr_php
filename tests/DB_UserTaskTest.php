@@ -10,9 +10,9 @@ require_once './Test_DB_Connector.php';
  */
 class DB_UserTaskTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var DB_UserTask
-     */
+  
+    
+    
     
     /**
      * Sets up the fixture, for example, opens a network connection.

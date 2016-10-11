@@ -38,6 +38,7 @@ class TestHelper {
     public function createUser(){
         /**
          * @var DB_MobileUser Description
+         * 
          */
         $user = new DB_MobileUser();
         $user->setUser_email("sergo3030@mail.ru");
@@ -51,6 +52,30 @@ class TestHelper {
         else{
             return FALSE;
         }
+    }
+    
+    /**
+     * 
+     * @param DB_MobileUser $user
+     * @return \ExchangeAndroidClasses\DB_UserTask
+     */
+    public function getTask($user) {
+        $data = date('Y-m-d H:i:s');
+        $task_array['task_type'] = 'waypoint';
+        $task_array['user_id'] = $user->getUser_id();
+        $task_array['task_file_name'] = 'filename';
+        $task_array['task_instruction'] = 'instruction';
+        $task_array['task_image_small'] = 'task_image_small';
+        $task_array['task_image_large'] = 'task_image_large';
+        $task_array['task_date_create'] = $data;
+        $task_array['task_date_last_modify'] = $data;
+        $task_array['task_date_last_use'] = $data;
+        $task_array['task_usage_count'] = 0;
+        $task_array['task_is_favorite'] = 'no';
+        $task_array['marked_as_delete'] = 0;
+        $task = new DB_UserTask();
+        $task->setAllFromArray($task_array);
+        return $task;
     }
     
      /**
@@ -73,12 +98,13 @@ class TestHelper {
             $task_array['task_date_last_use'] = $data;
             $task_array['task_usage_count'] = 0;
             $task_array['task_is_favorite'] = 'no';
+            $task_array['marked_as_delete'] = 0;
             $userTask = new DB_UserTask();
             $userTask->setAllFromArray($task_array);
             $this->db_TaskOperator->insertTask($userTask, $db_error);    
         }
         return !$db_error;
-        
+       
     }
     
 }

@@ -27,7 +27,8 @@ class JsonConvertable extends ArrayConvertable {
 
 
     public function getObjectAsJson(){   
-        return json_encode(get_object_vars($this));
+        
+        return json_encode($this->getAllAsStringArray());
     }
     
     public function setObjectFieldsFromJson( $json){
