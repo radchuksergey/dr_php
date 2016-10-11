@@ -47,7 +47,7 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
     {
        $db_error = FALSE;
        $data = date('Y-m-d H:i:s');
-        $task_array['task_type'] = 'type1';
+        $task_array['task_type'] = 'waypoint';
         $task_array['user_id'] = 666;
         $task_array['task_file_name'] = 'filename';
         $task_array['task_instruction'] = 'instruction';
@@ -58,6 +58,7 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
         $task_array['task_date_last_use'] = $data;
         $task_array['task_usage_count'] = 0;
         $task_array['task_is_favorite'] = 'no';
+        $task_array['marked_as_delete'] = 0;
         $userTask = new DB_UserTask();
         $userTask->setAllFromArray($task_array);
         $this->object->insertTask($userTask, $db_error);
@@ -84,7 +85,7 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
         $dbUSerOperator->createUser($user, $db_error);
         $this->assertTrue($user->getUser_id() > 0);
         $data = date('Y-m-d H:i:s');
-        $task_array['task_type'] = 'type1';
+        $task_array['task_type'] = 'waypoint';
         $task_array['user_id'] = $user->getUser_id();
         $task_array['task_file_name'] = 'myfilename';
         $task_array['task_instruction'] = 'instruction';
@@ -95,6 +96,7 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
         $task_array['task_date_last_use'] = $data;
         $task_array['task_usage_count'] = 0;
         $task_array['task_is_favorite'] = 'no';
+        $task_array['marked_as_delete'] = 0;
         $userTask = new DB_UserTask();
         $userTask->setAllFromArray($task_array);
         $this->object->insertTask($userTask, $db_error);    
@@ -134,6 +136,7 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
             $task_array['task_date_last_use'] = $data;
             $task_array['task_usage_count'] = 0;
             $task_array['task_is_favorite'] = 'no';
+            $task_array['marked_as_delete'] = 0;
             $userTask = new DB_UserTask();
             $userTask->setAllFromArray($task_array);
             $this->object->insertTask($userTask, $db_error);    
@@ -151,7 +154,7 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
     {
         $db_error = FALSE;
         $data = date('Y-m-d H:i:s');
-        $task_array['task_type'] = 'type1';
+        $task_array['task_type'] = 'waypoint';
         $task_array['user_id'] = 666;
         $task_array['task_file_name'] = 'filename';
         $task_array['task_instruction'] = 'instruction';
@@ -162,12 +165,13 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
         $task_array['task_date_last_use'] = $data;
         $task_array['task_usage_count'] = 0;
         $task_array['task_is_favorite'] = 'no';
+        $task_array['marked_as_delete'] = 0;
         $userTask = new DB_UserTask();
         $userTask->setAllFromArray($task_array);
         $this->object->insertTask($userTask, $db_error);
-        $userTask->setTask_date_create(date('Y-m-d H:i:s'));
-        $userTask->setTask_date_last_modify(date('Y-m-d H:i:s'));
-        $userTask->setTask_date_last_use(date('Y-m-d H:i:s'));
+        $userTask->setTask_date_create(time());
+        $userTask->setTask_date_last_modify(time());
+        $userTask->setTask_date_last_use(time());
         $userTask->setTask_image_large("new large image");
         $userTask->setTask_image_small("new small image");
         $userTask->setTask_instruction("new instruction");
@@ -197,6 +201,7 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
         $task_array['task_date_last_use'] = 'task_date_last_use';
         $task_array['task_usage_count'] = 'task_usage_count';
         $task_array['task_is_favorite'] = '$task_is_favorite';
+        $task_array['marked_as_delete'] = 0;
         $userTask = new DB_UserTask();
         $userTask->setAllFromArray($task_array);
         $this->object->insertTask($userTask, $db_error);
@@ -221,6 +226,7 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
         $task_array['task_date_last_use'] = 'task_date_last_use';
         $task_array['task_usage_count'] = 'task_usage_count';
         $task_array['task_is_favorite'] = '$task_is_favorite';
+        $task_array['marked_as_delete'] = 0;
         $userTask = new DB_UserTask();
         $userTask->setAllFromArray($task_array);
         $this->object->insertTask($userTask, $db_error);
