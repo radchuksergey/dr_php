@@ -143,7 +143,22 @@ class TaskControllerTest extends \PHPUnit_Framework_TestCase
      * @todo   Implement testExecuteRequest().
      */
     
-       
+    
+   public function testExecuteRequestGetEmptyTaskList(){
+        $dbUser = $this->testHelper->createUser();
+        $request[Controller::ACTION] = Controller::TASK_LIST;
+        $request[Controller::USER] = $dbUser->getObjectAsJson();
+        $result = $this->taskController->executeRequest($request);
+        $result = json_decode($result, TRUE);
+        $this->assertTrue(isset($result[Controller::ERRORS]));
+        $this->assertTrue(isset($result[Controller::TASK_LIST]));
+        $this->assertFalse($result[Controller::ERRORS]);
+        $tasklist = $result[Controller::TASK_LIST];
+        $taskEmpty = Controller::TASK_LIST_EMPTY;
+        $this->assertEquals($taskEmpty,  $tasklist);
+        
+   }
+   
     public function testExecuteRequestGetTaskList()
     {
           $dbUser = $this->testHelper->createUser();

@@ -2,6 +2,7 @@
 namespace ExchangeAndroidClasses;
 
 require_once './Test_DB_Connector.php';
+require_once './TestHelper.php';
 require_once __DIR__.'..\..\ExchangeAndroidClasses\DB_MobileUser.php';
 require_once __DIR__.'..\..\ExchangeAndroidClasses\DB_UserTask.php';
 require_once __DIR__.'..\..\ExchangeAndroidClasses\DB_TaskOperator.php';
@@ -18,6 +19,11 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
     protected $object;
     protected $testDBConnector;
     
+    
+    /**
+     * @var TestHelper
+     */
+    protected $testHelper;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -25,9 +31,11 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new DB_TaskOperator;
+        $this->object = new DB_TaskOperator();
+        $this->testHelper = new TestHelper();
         $this->testDBConnector = new Test_DB_Connector();
         $this->testDBConnector->clearDataFromTables();
+        
     }
 
     /**
@@ -104,6 +112,14 @@ class DB_TaskOperatorTest extends \PHPUnit_Framework_TestCase
         $userTaskFromDB = $this->object->getTaskByName($userTask->getTask_file_name(), $user->getUser_id(), $db_error);
         $this->assertEquals($userTask->getCheckSum(), $userTaskFromDB->getCheckSum());
         
+    }
+    
+    public function testGetEmptyTaskList(){
+        $dbuser = $this->testHelper->createUser();
+        $this->assertTrue($dbuser->getUser_id() > 0);
+        $db_error = FALSE;
+        $tasklist  = $this->object->getTaskListByUserID($dbuser->getUser_id(), $db_error);
+        $this->assertEquals($tasklist, DB_TaskOperator::NO_RECORDS);
     }
 
     /**

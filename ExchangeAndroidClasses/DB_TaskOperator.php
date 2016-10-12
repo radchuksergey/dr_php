@@ -82,6 +82,10 @@ class DB_TaskOperator extends \ExchangeAndroidClasses\DB_Connector{
                 $i++;
             }
         }
+        else {
+            $tasklist = self::NO_RECORDS;
+            
+        }
         $this->closeConnection();
         return $tasklist;     
     }

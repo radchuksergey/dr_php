@@ -121,7 +121,7 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
         $json_tasklist = FALSE;
         if ($user->getUser_id()){
             $tasklist = $this->task_operator->getTaskListByUserID($user->getUser_id(), $db_error);
-            if($tasklist){
+            if(($tasklist != FALSE) && ($tasklist != DB_TaskOperator::NO_RECORDS)){
                 $json_tasklist = '';
                 for($i = 0; $i < count($tasklist); $i++){
                     $task = $tasklist[$i];
@@ -130,10 +130,17 @@ class TaskController extends \ExchangeAndroidClasses\Controller{
                 }
                
             }
+            else if (($tasklist != FALSE) && ($tasklist == DB_TaskOperator::NO_RECORDS)){
+                //$json_tasklist = self::TASK_LIST_EMPTY;
+                $result[self::TASK_LIST] = self::TASK_LIST_EMPTY;
+                $result[self::ERRORS] = $db_error;
+                $result = json_encode($result);
+                return $result;
+            }
         }
         $result[self::TASK_LIST] = json_encode($json_tasklist);
         $result[self::ERRORS] = $db_error;
-        $decoded = json_decode($result[self::TASK_LIST]);
+        
         $result = json_encode($result);
         return $result;
     }

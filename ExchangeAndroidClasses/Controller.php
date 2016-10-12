@@ -27,6 +27,7 @@ abstract class Controller {
     
     const CREATE_TASK = 'create_task';
     const TASK_LIST = 'task_list';
+    const TASK_LIST_EMPTY = 'task_list_empty';
     const UPDATE_TASK = 'update_task';
     const DELETE_TASK = 'delete_task';
     
@@ -39,6 +40,8 @@ abstract class Controller {
     const ERRORS = 'errors';
     const ERROR_USER_EXIST = 'user already exist';
     const ERROR_PASSWORD_USER_INCORRECT = 'login or password incorrect';
+    
+   
 
     public abstract function executeRequest($http_request);
 }

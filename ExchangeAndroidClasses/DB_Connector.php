@@ -21,6 +21,8 @@ use DB_Config;
 class DB_Connector {
     
     protected  $mysqli_connection;
+    
+    const NO_RECORDS = 'no records';
 
     protected function establisheMySqli_Connection(){
         $this->mysqli_connection = new \mysqli(DB_Config::getServer_Name(), DB_Config::getDB_Username(), 
