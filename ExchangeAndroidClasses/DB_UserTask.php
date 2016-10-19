@@ -67,6 +67,70 @@ class DB_UserTask extends \ExchangeAndroidClasses\JsonConvertable{
     protected $task_is_favorite;
     
     /**
+     * @var string
+     */
+    protected $task_camera;
+    
+     /**
+     * @var string
+     */
+    protected $task_uav_model;
+    function getTask_camera() {
+        return $this->task_camera;
+    }
+
+    function getTask_uav_model() {
+        return $this->task_uav_model;
+    }
+
+    function getTask_fly_time() {
+        return $this->task_fly_time;
+    }
+
+    function getTask_fly_distance() {
+        return $this->task_fly_distance;
+    }
+
+    function getTask_status() {
+        return $this->task_status;
+    }
+
+    function setTask_camera($task_camera) {
+        $this->task_camera = $task_camera;
+    }
+
+    function setTask_uav_model($task_uav_model) {
+        $this->task_uav_model = $task_uav_model;
+    }
+
+    function setTask_fly_time($task_fly_time) {
+        $this->task_fly_time = $task_fly_time;
+    }
+
+    function setTask_fly_distance($task_fly_distance) {
+        $this->task_fly_distance = $task_fly_distance;
+    }
+
+    function setTask_status($task_status) {
+        $this->task_status = $task_status;
+    }
+
+        /**
+     * @var string
+     */
+    protected $task_fly_time;
+
+    /**
+     * @var string
+     */
+    protected $task_fly_distance;
+
+    /**
+     * @var string
+     */
+    protected $task_status;
+            
+    /**
      * @var int
      */
     protected $marked_as_delete;
